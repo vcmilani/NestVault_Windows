@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="App.DisplayName" xml:space="preserve">
+    <value>NestVault</value>
+  </data>
+  <data name="Dashboard.Title" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Backups.Title" xml:space="preserve">
+    <value>Backups</value>
+  </data>
+  <data name="MyBackups.Title" xml:space="preserve">
+    <value>My Backups</value>
+  </data>
+  <data name="Cleanup.Title" xml:space="preserve">
+    <value>Cleanup</value>
+  </data>
+  <data name="Settings.Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Stats.Backups" xml:space="preserve">
+    <value>Backups</value>
+  </data>
+  <data name="Stats.Versions" xml:space="preserve">
+    <value>Versions</value>
+  </data>
+  <data name="Stats.Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="Stats.Storage" xml:space="preserve">
+    <value>Storage</value>
+  </data>
+  <data name="Server.Unreachable" xml:space="preserve">
+    <value>Server Unreachable</value>
+  </data>
+  <data name="Server.CheckSettings" xml:space="preserve">
+    <value>Check your server URL and API key in Settings.</value>
+  </data>
+  <data name="Tray.Open" xml:space="preserve">
+    <value>Open NestVault</value>
+  </data>
+  <data name="Tray.Quit" xml:space="preserve">
+    <value>Quit</value>
+  </data>
+  <data name="Backup.Complete" xml:space="preserve">
+    <value>Backup complete</value>
+  </data>
+  <data name="Backup.Failed" xml:space="preserve">
+    <value>Backup failed</value>
+  </data>
+  <data name="Backup.Cancelled" xml:space="preserve">
+    <value>Backup cancelled</value>
+  </data>
+</root>

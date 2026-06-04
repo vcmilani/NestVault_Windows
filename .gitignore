@@ -1,0 +1,30 @@
+## .NET / C#
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.swp
+*.sln.docstates
+
+## Build output
+publish/
+*.msix
+*.msixbundle
+*.appx
+
+## VS Code
+.vscode/*.log
+
+## OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## Rider / JetBrains
+.idea/
+*.DotSettings
+
+## NuGet
+*.nupkg
+packages/

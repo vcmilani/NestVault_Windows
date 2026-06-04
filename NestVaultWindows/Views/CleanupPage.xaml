@@ -1,0 +1,110 @@
+<Page
+    x:Class="NestVaultWindows.Views.CleanupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dataGrid="using:CommunityToolkit.WinUI.Controls"
+    xmlns:vm="using:NestVaultWindows.ViewModels"
+    Background="Transparent">
+
+    <ScrollViewer>
+        <StackPanel Padding="24 16" Spacing="20" MaxWidth="800">
+
+            <TextBlock Text="Cleanup Old Versions"
+                       Style="{StaticResource TitleTextBlockStyle}" />
+
+            <!-- Config form -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1" CornerRadius="8" Padding="16">
+                <StackPanel Spacing="16">
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Target" Style="{StaticResource CaptionTextBlockStyle}" />
+                        <RadioButtons x:Name="TargetRadio"
+                                      SelectionChanged="TargetRadio_SelectionChanged">
+                            <RadioButton Content="All backups" IsChecked="True" />
+                            <RadioButton Content="Specific backup" />
+                        </RadioButtons>
+                    </StackPanel>
+
+                    <ComboBox x:Name="LabelCombo"
+                              Header="Backup label"
+                              ItemsSource="{x:Bind ViewModel.AvailableBackups, Mode=OneWay}"
+                              DisplayMemberPath="Label"
+                              SelectedValuePath="Label"
+                              SelectedValue="{x:Bind ViewModel.SelectedLabel, Mode=TwoWay}"
+                              HorizontalAlignment="Stretch"
+                              IsEnabled="{x:Bind ViewModel.IsSpecificTarget, Mode=OneWay}" />
+
+                    <NumberBox Header="Keep N most recent versions"
+                               Value="{x:Bind ViewModel.KeepCount, Mode=TwoWay}"
+                               Minimum="1" Maximum="999"
+                               SpinButtonPlacementMode="Compact" />
+
+                    <Button Content="Preview"
+                            Command="{x:Bind ViewModel.RefreshPreviewCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegateConverter}}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Preview -->
+            <StackPanel Spacing="8"
+                        Visibility="{x:Bind ViewModel.Preview.Count, Mode=OneWay, Converter={StaticResource CountToVisConverter}}">
+                <TextBlock Text="Versions to Remove" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <dataGrid:DataGrid ItemsSource="{x:Bind ViewModel.Preview, Mode=OneWay}"
+                                   AutoGenerateColumns="False"
+                                   IsReadOnly="True"
+                                   GridLinesVisibility="Horizontal"
+                                   MaxHeight="300">
+                    <dataGrid:DataGrid.Columns>
+                        <dataGrid:DataGridTextColumn Header="Backup"         Binding="{Binding Label}"        Width="*" />
+                        <dataGrid:DataGridTextColumn Header="Total Versions"  Binding="{Binding TotalVersions}" Width="120" />
+                        <dataGrid:DataGridTextColumn Header="To Remove"       Binding="{Binding ToRemove}"      Width="100" />
+                    </dataGrid:DataGrid.Columns>
+                </dataGrid:DataGrid>
+
+                <Button Content="Run Cleanup"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Click="RunCleanup_Click"
+                        IsEnabled="{x:Bind ViewModel.IsRunning, Mode=OneWay, Converter={StaticResource BoolNegateConverter}}" />
+            </StackPanel>
+
+            <ProgressRing IsActive="{x:Bind ViewModel.IsRunning, Mode=OneWay}"
+                          HorizontalAlignment="Left"
+                          Visibility="{x:Bind ViewModel.IsRunning, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}" />
+
+            <!-- Results -->
+            <StackPanel Spacing="8"
+                        Visibility="{x:Bind ViewModel.Results.Count, Mode=OneWay, Converter={StaticResource CountToVisConverter}}">
+                <TextBlock Text="Results" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <ItemsControl ItemsSource="{x:Bind ViewModel.Results, Mode=OneWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:CleanupResultItem">
+                            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1" CornerRadius="6" Padding="12 8" Margin="0 4">
+                                <StackPanel Spacing="2">
+                                    <TextBlock Text="{x:Bind Label}" FontWeight="SemiBold" />
+                                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                        <Run Text="{x:Bind Removed}" /><Run Text=" removed · " />
+                                        <Run Text="{x:Bind Kept}" /><Run Text=" kept · " />
+                                        <Run Text="{x:Bind StorageFilesRemoved}" /><Run Text=" storage files freed" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- Error -->
+            <InfoBar Title="Error"
+                     Message="{x:Bind ViewModel.Error, Mode=OneWay}"
+                     Severity="Error"
+                     IsOpen="{x:Bind ViewModel.HasError, Mode=OneWay}"
+                     IsClosable="True" />
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

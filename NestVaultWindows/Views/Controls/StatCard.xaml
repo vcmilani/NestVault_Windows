@@ -1,0 +1,23 @@
+<UserControl
+    x:Class="NestVaultWindows.Views.Controls.StatCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="16">
+        <StackPanel Spacing="4">
+            <TextBlock x:Name="TitleText"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            <TextBlock x:Name="ValueText"
+                       Style="{StaticResource TitleLargeTextBlockStyle}"
+                       FontWeight="SemiBold" />
+            <TextBlock x:Name="SubtitleText"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+        </StackPanel>
+    </Border>
+</UserControl>

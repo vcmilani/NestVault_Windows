@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "NestVault (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/NestVaultWindows/bin/Debug/net8.0-windows10.0.19041.0/win-x64/NestVaultWindows.exe",
+      "args": [],
+      "cwd": "${workspaceFolder}/NestVaultWindows",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    }
+  ]
+}
