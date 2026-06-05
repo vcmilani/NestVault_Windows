@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using H.NotifyIcon;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppNotifications;
 using NestVault_Windows.Services;
 using NestVault_Windows.ViewModels;
@@ -86,7 +87,7 @@ public partial class App : Application
         {
             MainAppWindow.Show();
             MainAppWindow.Activate();
-            if (MainAppWindow.Presenter is Microsoft.UI.Windowing.OverlappedPresenter p)
+            if (MainAppWindow.AppWindow.Presenter is Microsoft.UI.Windowing.OverlappedPresenter p)
                 p.Restore();
         });
     }

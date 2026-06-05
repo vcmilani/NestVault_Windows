@@ -237,7 +237,7 @@ public partial class BackupConfigsViewModel : ObservableObject
     private static List<string> Tokenize(string input)
     {
         var tokens  = new List<string>();
-        var current = System.Text.StringBuilder.Empty;
+        var current = new System.Text.StringBuilder();
         char? inQuote = null;
 
         foreach (var ch in input)

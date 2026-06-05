@@ -32,7 +32,7 @@ public sealed partial class MainWindow : Window
         AppWindow.Closing += (_, args) =>
         {
             args.Cancel = true;
-            Hide();
+            AppWindow.Hide();
         };
 
         TaskbarProgressHelper.Initialize(this);

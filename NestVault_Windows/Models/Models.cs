@@ -19,8 +19,8 @@ public record BackupSummary(
     [property: JsonPropertyName("total_size_bytes")]   long TotalSizeBytes
 )
 {
-    public string FormattedSize => FormatBytes(TotalSizeBytes);
-    public DateTimeOffset? LastVersionDate => ParseIso(LastVersion);
+    public string FormattedSize => ModelHelpers.FormatBytes(TotalSizeBytes);
+    public DateTimeOffset? LastVersionDate => ModelHelpers.ParseIso(LastVersion);
 }
 
 // MARK: - BackupVersion  (GET /backups/{label}/versions)
@@ -36,8 +36,8 @@ public record BackupVersion(
     [property: JsonPropertyName("total_size_bytes")]   long TotalSizeBytes
 )
 {
-    public string FormattedSize => FormatBytes(TotalSizeBytes);
-    public DateTimeOffset? Date => ParseIso(VersionKey);
+    public string FormattedSize => ModelHelpers.FormatBytes(TotalSizeBytes);
+    public DateTimeOffset? Date => ModelHelpers.ParseIso(VersionKey);
     public bool IsDone => Status == "done";
 }
 
@@ -52,7 +52,7 @@ public record VersionFile(
     [property: JsonPropertyName("created_at")]     string? CreatedAt
 )
 {
-    public string FormattedSize => FormatBytes(Size);
+    public string FormattedSize => ModelHelpers.FormatBytes(Size);
 }
 
 // MARK: - CheckResponse  (POST /check)
@@ -130,7 +130,7 @@ public record VersionCreatedResponse(
 
 public record GlobalStats(int TotalBackups, int TotalVersions, int TotalFiles, long TotalSize)
 {
-    public string FormattedSize => FormatBytes(TotalSize);
+    public string FormattedSize => ModelHelpers.FormatBytes(TotalSize);
 }
 
 // MARK: - BackupSchedule

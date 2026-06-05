@@ -70,8 +70,8 @@ public partial class SettingsViewModel : ObservableObject
         IsNetworkAvailable = _power.IsNetworkAvailable;
     }
 
-    partial void OnServerUrlChanged(string _) => IsDirty = true;
-    partial void OnApiKeyChanged(string _)    => IsDirty = true;
+    partial void OnServerUrlChanged(string value) => IsDirty = true;
+    partial void OnApiKeyChanged(string value)    => IsDirty = true;
 
     [RelayCommand]
     private async Task TestConnectionAsync()

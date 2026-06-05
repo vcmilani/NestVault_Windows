@@ -47,9 +47,9 @@ public partial class CleanupViewModel : ObservableObject
         AvailableBackups = _api.Backups;
     }
 
-    partial void OnTargetChanged(CleanupTarget _)       => _ = RefreshPreviewAsync();
-    partial void OnSelectedLabelChanged(string? _)      => _ = RefreshPreviewAsync();
-    partial void OnKeepCountChanged(int _)              => _ = RefreshPreviewAsync();
+    partial void OnTargetChanged(CleanupTarget value)       { _ = RefreshPreviewAsync(); }
+    partial void OnSelectedLabelChanged(string? value)      { _ = RefreshPreviewAsync(); }
+    partial void OnKeepCountChanged(int value)              { _ = RefreshPreviewAsync(); }
 
     [RelayCommand]
     private async Task RefreshPreviewAsync()
