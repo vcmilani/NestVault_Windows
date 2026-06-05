@@ -2,7 +2,7 @@
     x:Class="NestVault_Windows.Views.CleanupPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:dataGrid="using:CommunityToolkit.WinUI.Controls"
+    xmlns:dataGrid="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:vm="using:NestVault_Windows.ViewModels"
     Background="Transparent">
 
