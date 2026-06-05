@@ -16,14 +16,14 @@ using NestVault_Windows.Models;
 
 namespace NestVault_Windows.Services;
 
+public record LogEntry(string Text, LogKind Kind);
+public enum LogKind { Info, Success, Warning, Error }
+
 public partial class BackupRunner : ObservableObject
 {
     // MARK: - State
 
     public enum RunStatus { Idle, Running, Done, Failed, Cancelled }
-
-    public record LogEntry(string Text, LogKind Kind);
-    public enum LogKind { Info, Success, Warning, Error }
 
     public class BackupStats
     {

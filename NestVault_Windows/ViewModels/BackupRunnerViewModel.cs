@@ -16,7 +16,7 @@ public partial class BackupRunnerViewModel : ObservableObject
     private BackupRunner?            _runner;
     private BackupProfile?           _profile;
 
-    [ObservableProperty] private List<BackupRunner.LogEntry> _entries = [];
+    [ObservableProperty] private List<LogEntry> _entries = [];
     [ObservableProperty] private double              _progress;
     [ObservableProperty] private BackupRunner.BackupStats  _stats = new();
     [ObservableProperty] private string              _currentFile = "";

@@ -18,7 +18,7 @@ public partial class BackupQueueViewModel : ObservableObject
 
     [ObservableProperty] private List<BackupProfile>        _allProfiles = [];
     [ObservableProperty] private List<BackupProfile>        _selectedProfiles = [];
-    [ObservableProperty] private List<BackupQueue.QueueItem> _queueItems = [];
+    [ObservableProperty] private List<QueueItem> _queueItems = [];
     [ObservableProperty] private BackupQueue.QueueStatus    _status = BackupQueue.QueueStatus.Idle;
     [ObservableProperty] private double                     _progress;
     [ObservableProperty] private bool                       _canStart;

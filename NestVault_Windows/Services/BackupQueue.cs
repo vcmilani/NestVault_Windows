@@ -7,28 +7,28 @@ using NestVault_Windows.Models;
 
 namespace NestVault_Windows.Services;
 
+public enum ItemStatus { Waiting, Running, Done, Failed, Cancelled }
+
+public class QueueItem
+{
+    public Guid          Id      { get; } = Guid.NewGuid();
+    public BackupProfile Profile { get; init; } = new();
+    public ItemStatus    Status  { get; set; } = ItemStatus.Waiting;
+
+    public string StatusIcon => Status switch
+    {
+        ItemStatus.Waiting   => "⏳",
+        ItemStatus.Running   => "↑",
+        ItemStatus.Done      => "✓",
+        ItemStatus.Failed    => "✗",
+        ItemStatus.Cancelled => "⊘",
+        _                    => "—"
+    };
+}
+
 public partial class BackupQueue : ObservableObject
 {
     public enum QueueStatus { Idle, Running, Done, Cancelled }
-
-    public enum ItemStatus { Waiting, Running, Done, Failed, Cancelled }
-
-    public class QueueItem
-    {
-        public Guid          Id      { get; } = Guid.NewGuid();
-        public BackupProfile Profile { get; init; } = new();
-        public ItemStatus    Status  { get; set; } = ItemStatus.Waiting;
-
-        public string StatusIcon => Status switch
-        {
-            ItemStatus.Waiting   => "⏳",
-            ItemStatus.Running   => "↑",
-            ItemStatus.Done      => "✓",
-            ItemStatus.Failed    => "✗",
-            ItemStatus.Cancelled => "⊘",
-            _                    => "—"
-        };
-    }
 
     [ObservableProperty] private List<QueueItem> _items = [];
     [ObservableProperty] private int             _currentIndex = -1;

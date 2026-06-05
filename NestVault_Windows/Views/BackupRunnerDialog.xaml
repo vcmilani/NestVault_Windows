@@ -78,7 +78,7 @@
             <ScrollViewer x:Name="LogScroller" Padding="8">
                 <ItemsControl ItemsSource="{x:Bind ViewModel.Entries, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="svc:BackupRunner+LogEntry">
+                        <DataTemplate x:DataType="svc:LogEntry">
                             <TextBlock Text="{x:Bind Text}"
                                        FontFamily="Consolas" FontSize="11"
                                        Foreground="{x:Bind Kind, Converter={StaticResource LogKindToColorConverter}}"

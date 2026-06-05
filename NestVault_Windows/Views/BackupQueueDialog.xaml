@@ -47,7 +47,7 @@
                       SelectionMode="None"
                       MaxHeight="260">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="svc:BackupQueue+QueueItem">
+                    <DataTemplate x:DataType="svc:QueueItem">
                         <Grid Padding="4 6" ColumnSpacing="12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="24" />
