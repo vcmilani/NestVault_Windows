@@ -9,11 +9,15 @@ using NestVault_Windows.Services;
 
 namespace NestVault_Windows.ViewModels;
 
+public record CleanupResultItem(string Label, int Removed, int Kept, int StorageFilesRemoved);
+
 public partial class CleanupViewModel : ObservableObject
 {
     private readonly APIService _api;
 
     public enum CleanupTarget { All, Specific }
+
+    public record VersionPreview(string Label, int TotalVersions, int ToRemove);
 
     [ObservableProperty] private CleanupTarget         _target = CleanupTarget.All;
     [ObservableProperty] private string?               _selectedLabel;
@@ -28,10 +32,9 @@ public partial class CleanupViewModel : ObservableObject
     public bool HasError => Error is not null;
     public bool IsSpecificTarget => Target == CleanupTarget.Specific;
 
-    public record CleanupResultItem(string Label, int Removed, int Kept, int StorageFilesRemoved);
-    public List<CleanupResultItem> ResultItems => Results.Select(r => new CleanupResultItem(r.Label, r.Removed, r.Kept, r.StorageFilesRemoved)).ToList();
-
-    public record VersionPreview(string Label, int TotalVersions, int ToRemove);
+    public List<CleanupResultItem> ResultItems => Results
+        .Select(r => new CleanupResultItem(r.Label, r.Removed, r.Kept, r.StorageFilesRemoved))
+        .ToList();
 
     public CleanupViewModel(APIService api)
     {

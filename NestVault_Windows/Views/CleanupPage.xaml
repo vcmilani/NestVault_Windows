@@ -77,7 +77,7 @@
             <StackPanel Spacing="8"
                         Visibility="{x:Bind ViewModel.Results.Count, Mode=OneWay, Converter={StaticResource CountToVisConverter}}">
                 <TextBlock Text="Results" Style="{StaticResource SubtitleTextBlockStyle}" />
-                <ItemsControl ItemsSource="{x:Bind ViewModel.Results, Mode=OneWay}">
+                <ItemsControl ItemsSource="{x:Bind ViewModel.ResultItems, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="vm:CleanupResultItem">
                             <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"

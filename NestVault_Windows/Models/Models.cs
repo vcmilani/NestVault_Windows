@@ -21,6 +21,7 @@ public record BackupSummary(
 {
     public string FormattedSize => ModelHelpers.FormatBytes(TotalSizeBytes);
     public DateTimeOffset? LastVersionDate => ModelHelpers.ParseIso(LastVersion);
+    public string FormattedLastVersion => LastVersionDate?.ToString("MMM d, yyyy") ?? "—";
 }
 
 // MARK: - BackupVersion  (GET /backups/{label}/versions)
