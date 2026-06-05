@@ -15,7 +15,6 @@
             <tb:TaskbarIcon x:Key="TrayIcon"
                             ToolTipText="NestVault"
                             IconSource="Assets/tray.ico">
-                <tb:TaskbarIcon.ContextMenuMode>SecondWindow</tb:TaskbarIcon.ContextMenuMode>
                 <tb:TaskbarIcon.ContextFlyout>
                     <MenuFlyout>
                         <MenuFlyoutItem x:Name="TrayOpenItem"  Text="Open NestVault" />
