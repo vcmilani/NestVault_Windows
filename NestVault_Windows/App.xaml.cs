@@ -76,7 +76,27 @@ public partial class App : Application
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "NestVault", "crash.log");
             Directory.CreateDirectory(Path.GetDirectoryName(logPath)!);
-            File.WriteAllText(logPath, $"[{DateTimeOffset.Now:O}]\n{ex}");
+
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine($"[{DateTimeOffset.Now:O}]");
+            sb.AppendLine($"OS:   {Environment.OSVersion}");
+            sb.AppendLine($"Base: {AppContext.BaseDirectory}");
+            sb.AppendLine();
+
+            var e = ex;
+            int depth = 0;
+            while (e is not null)
+            {
+                sb.AppendLine($"--- Exception depth={depth} ---");
+                sb.AppendLine($"Type:    {e.GetType().FullName}");
+                sb.AppendLine($"HRESULT: 0x{(uint)e.HResult:X8}");
+                sb.AppendLine($"Message: {e.Message}");
+                sb.AppendLine(e.StackTrace);
+                e = e.InnerException;
+                depth++;
+            }
+
+            File.WriteAllText(logPath, sb.ToString());
         }
         catch { /* last resort — ignore */ }
     }
