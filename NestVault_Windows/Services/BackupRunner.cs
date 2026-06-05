@@ -24,7 +24,7 @@ public partial class BackupRunner : ObservableObject
     public record LogEntry(string Text, LogKind Kind);
     public enum LogKind { Info, Success, Warning, Error }
 
-    public class Stats
+    public class BackupStats
     {
         public int Total, Uploaded, Registered, Cached, Ignored, Errors, Inherited, Skipped;
     }
@@ -32,7 +32,7 @@ public partial class BackupRunner : ObservableObject
     [ObservableProperty] private RunStatus _status = RunStatus.Idle;
     [ObservableProperty] private List<LogEntry> _entries = [];
     [ObservableProperty] private double _progress;
-    [ObservableProperty] private Stats _stats = new();
+    [ObservableProperty] private BackupStats _stats = new();
     [ObservableProperty] private string _currentFile = "";
     [ObservableProperty] private bool _wasFullBackup = true;
 
@@ -64,7 +64,7 @@ public partial class BackupRunner : ObservableObject
         _session  = new HttpClient { Timeout = Timeout.InfiniteTimeSpan };
         Status    = RunStatus.Running;
         Entries   = [];
-        Stats     = new Stats();
+        Stats     = new BackupStats();
         Progress  = 0;
         WasFullBackup = true;
 
