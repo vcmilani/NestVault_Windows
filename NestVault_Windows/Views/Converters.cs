@@ -78,12 +78,12 @@ public sealed class LogKindToColorBrushConverter : IValueConverter
     private static readonly SolidColorBrush Error   = new(Color.FromArgb(255, 255, 69, 58));
 
     public object Convert(object value, Type _, object __, string ___)
-        => value is BackupRunner.LogKind kind
+        => value is LogKind kind
             ? kind switch
             {
-                BackupRunner.LogKind.Success => Success,
-                BackupRunner.LogKind.Warning => Warning,
-                BackupRunner.LogKind.Error   => Error,
+                LogKind.Success => Success,
+                LogKind.Warning => Warning,
+                LogKind.Error   => Error,
                 _                             => Info
             }
             : Info;
