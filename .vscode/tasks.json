@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/NestVaultWindows/NestVaultWindows.csproj",
+        "${workspaceFolder}/NestVault_Windows/NestVault_Windows.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary",
         "-c",
@@ -26,7 +26,7 @@
       "args": [
         "run",
         "--project",
-        "${workspaceFolder}/NestVaultWindows/NestVaultWindows.csproj"
+        "${workspaceFolder}/NestVault_Windows/NestVault_Windows.csproj"
       ],
       "problemMatcher": "$msCompile",
       "group": "test"
@@ -37,7 +37,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/NestVaultWindows/NestVaultWindows.csproj",
+        "${workspaceFolder}/NestVault_Windows/NestVault_Windows.csproj",
         "-c",
         "Release",
         "-r",

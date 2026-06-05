@@ -1,0 +1,15 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:NestVault_Windows.Views">
+
+    <!-- Converters -->
+    <converters:BoolToVisibilityConverter      x:Key="BoolToVisConverter" />
+    <converters:BoolNegToVisibilityConverter   x:Key="BoolNegToVisConverter" />
+    <converters:BoolNegateConverter            x:Key="BoolNegateConverter" />
+    <converters:CountToVisibilityConverter     x:Key="CountToVisConverter" />
+    <converters:BoolToGreenRedColorConverter   x:Key="BoolToGreenRedConverter" />
+    <converters:BoolToRedBrushConverter        x:Key="BoolToRedConverter" />
+    <converters:LogKindToColorBrushConverter   x:Key="LogKindToColorConverter" />
+
+</ResourceDictionary>

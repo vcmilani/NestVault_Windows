@@ -1,0 +1,162 @@
+<Page
+    x:Class="NestVault_Windows.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:NestVault_Windows.ViewModels"
+    Background="Transparent">
+
+    <ScrollViewer>
+        <StackPanel Padding="24 16" Spacing="0" MaxWidth="700">
+
+            <TextBlock Text="Settings"
+                       Style="{StaticResource TitleTextBlockStyle}"
+                       Margin="0 0 0 16" />
+
+            <TabView TabWidthMode="Equal" IsAddTabButtonVisible="False">
+
+                <!-- General tab -->
+                <TabViewItem Header="General">
+                    <ScrollViewer Padding="0 12">
+                        <StackPanel Spacing="16">
+                            <ToggleSwitch Header="Launch at startup"
+                                          IsOn="{x:Bind ViewModel.LaunchAtStartup, Mode=TwoWay}" />
+                            <ToggleSwitch Header="Pause scheduled backups on battery"
+                                          IsOn="{x:Bind ViewModel.PauseOnBattery, Mode=TwoWay}" />
+                            <NumberBox Header="Minimum battery % to run backups"
+                                       Value="{x:Bind ViewModel.MinBatteryPercent, Mode=TwoWay}"
+                                       Minimum="0" Maximum="100"
+                                       SpinButtonPlacementMode="Compact" />
+
+                            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1" CornerRadius="8" Padding="14">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="System Status"
+                                               Style="{StaticResource SubtitleTextBlockStyle}" />
+                                    <Grid ColumnSpacing="12" RowSpacing="6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition /><RowDefinition /><RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Power:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                                   Text="{x:Bind ViewModel.PowerStatusText, Mode=OneWay}" />
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Network:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                                   Text="{x:Bind ViewModel.NetworkType, Mode=OneWay}" />
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Battery:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                                   Text="{x:Bind ViewModel.BatteryPercent, Mode=OneWay}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <Button Content="Save"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind ViewModel.SaveCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsDirty, Mode=OneWay}" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabViewItem>
+
+                <!-- Server tab -->
+                <TabViewItem Header="Server">
+                    <ScrollViewer Padding="0 12">
+                        <StackPanel Spacing="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Server URL" Style="{StaticResource CaptionTextBlockStyle}" />
+                                <TextBox Text="{x:Bind ViewModel.ServerUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         PlaceholderText="http://192.168.1.100:8000" />
+                            </StackPanel>
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="API Key" Style="{StaticResource CaptionTextBlockStyle}" />
+                                <Grid ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <PasswordBox Grid.Column="0"
+                                                 Password="{x:Bind ViewModel.ApiKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 PlaceholderText="Optional API key" />
+                                    <Button Grid.Column="1" Content="Show/Hide"
+                                            Click="ToggleApiKey_Click" />
+                                </Grid>
+                            </StackPanel>
+                            <Button Content="Test Connection"
+                                    Command="{x:Bind ViewModel.TestConnectionCommand}" />
+                            <TextBlock Text="{x:Bind ViewModel.TestConnectionStatus, Mode=OneWay}"
+                                       Style="{StaticResource CaptionTextBlockStyle}" />
+                            <Button Content="Save"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind ViewModel.SaveCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsDirty, Mode=OneWay}" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabViewItem>
+
+                <!-- Queue Schedule tab -->
+                <TabViewItem Header="Queue Schedule">
+                    <ScrollViewer Padding="0 12">
+                        <StackPanel Spacing="12">
+                            <TextBlock TextWrapping="WrapWholeWords"
+                                       Style="{StaticResource BodyTextBlockStyle}"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                Configure a separate schedule to run all enabled backup profiles in sequence.
+                            </TextBlock>
+                            <ComboBox Header="Frequency"
+                                      SelectedIndex="{x:Bind ViewModel.QueueSchedule.FrequencyIndex, Mode=TwoWay}"
+                                      HorizontalAlignment="Stretch">
+                                <ComboBoxItem Content="Off" />
+                                <ComboBoxItem Content="Hourly" />
+                                <ComboBoxItem Content="Daily" />
+                                <ComboBoxItem Content="Weekly" />
+                                <ComboBoxItem Content="Custom" />
+                            </ComboBox>
+                            <NumberBox Header="Hour (0–23)"
+                                       Value="{x:Bind ViewModel.QueueSchedule.Hour, Mode=TwoWay}"
+                                       Minimum="0" Maximum="23" SpinButtonPlacementMode="Compact" />
+                            <NumberBox Header="Minute (0–59)"
+                                       Value="{x:Bind ViewModel.QueueSchedule.Minute, Mode=TwoWay}"
+                                       Minimum="0" Maximum="59" SpinButtonPlacementMode="Compact" />
+                            <NumberBox Header="Custom Interval (minutes)"
+                                       Value="{x:Bind ViewModel.QueueSchedule.CustomMinutes, Mode=TwoWay}"
+                                       Minimum="5" Maximum="10080" SpinButtonPlacementMode="Compact" />
+                            <Button Content="Save"
+                                    Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind ViewModel.SaveCommand}" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabViewItem>
+
+                <!-- About tab -->
+                <TabViewItem Header="About">
+                    <StackPanel Padding="0 16" Spacing="16" HorizontalAlignment="Center">
+                        <Image Source="Assets/app.png" Width="80" Height="80" />
+                        <TextBlock Text="NestVault"
+                                   Style="{StaticResource TitleLargeTextBlockStyle}"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
+                                   HorizontalAlignment="Center">
+                            Version <Run Text="{x:Bind ViewModel.AppVersion}" />
+                        </TextBlock>
+                        <TextBlock Text="{x:Bind ViewModel.ServerVersion, Mode=OneWay}"
+                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+                            <HyperlinkButton Content="GitHub" NavigateUri="https://github.com" />
+                            <HyperlinkButton Content="API Docs" NavigateUri="about:blank" />
+                        </StackPanel>
+                    </StackPanel>
+                </TabViewItem>
+
+            </TabView>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

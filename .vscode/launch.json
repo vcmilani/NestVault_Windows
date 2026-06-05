@@ -6,9 +6,9 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/NestVaultWindows/bin/Debug/net8.0-windows10.0.19041.0/win-x64/NestVaultWindows.exe",
+      "program": "${workspaceFolder}/NestVault_Windows/bin/Debug/net8.0-windows10.0.19041.0/win-x64/NestVault_Windows.exe",
       "args": [],
-      "cwd": "${workspaceFolder}/NestVaultWindows",
+      "cwd": "${workspaceFolder}/NestVault_Windows",
       "stopAtEntry": false,
       "console": "internalConsole"
     }
