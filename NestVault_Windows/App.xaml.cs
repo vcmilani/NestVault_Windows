@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using H.NotifyIcon;
 using Microsoft.UI.Dispatching;
@@ -27,32 +28,57 @@ public partial class App : Application
     {
         InitializeComponent();
         Scheduler = new ScheduleManager(Api, Config, Power);
+        UnhandledException += (_, e) =>
+        {
+            e.Handled = true;
+            WriteCrashLog(e.Exception);
+        };
     }
 
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
-        // Register toast notifications
-        try { AppNotificationManager.Default.Register(); }
-        catch { /* not critical */ }
-
-        // Create main window
-        MainAppWindow = new MainWindow();
-        MainAppWindow.Activate();
-
-        // Setup system tray
-        SetupTray();
-
-        // Start background services
-        Power.Refresh();
-        Scheduler.Start();
-
-        // Initial data load
-        await Task.Run(async () =>
+        try
         {
-            await Api.CheckHealthAsync();
-            if (Api.IsConnected)
-                await Api.FetchBackupsAsync();
-        });
+            // Register toast notifications
+            try { AppNotificationManager.Default.Register(); }
+            catch { /* not critical */ }
+
+            // Create main window
+            MainAppWindow = new MainWindow();
+            MainAppWindow.Activate();
+
+            // Setup system tray
+            SetupTray();
+
+            // Start background services
+            Power.Refresh();
+            Scheduler.Start();
+
+            // Initial data load
+            await Task.Run(async () =>
+            {
+                await Api.CheckHealthAsync();
+                if (Api.IsConnected)
+                    await Api.FetchBackupsAsync();
+            });
+        }
+        catch (Exception ex)
+        {
+            WriteCrashLog(ex);
+        }
+    }
+
+    private static void WriteCrashLog(Exception ex)
+    {
+        try
+        {
+            var logPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "NestVault", "crash.log");
+            Directory.CreateDirectory(Path.GetDirectoryName(logPath)!);
+            File.WriteAllText(logPath, $"[{DateTimeOffset.Now:O}]\n{ex}");
+        }
+        catch { /* last resort — ignore */ }
     }
 
     private void SetupTray()

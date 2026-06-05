@@ -16,8 +16,12 @@ public partial class PowerMonitor : ObservableObject, IDisposable
     public PowerMonitor()
     {
         Refresh();
-        NetworkChange.NetworkAvailabilityChanged += (_, _) => UpdateNetwork();
-        Battery.AggregateBattery.ReportUpdated    += (_, _) => UpdateBattery();
+        try
+        {
+            NetworkChange.NetworkAvailabilityChanged += (_, _) => UpdateNetwork();
+            Battery.AggregateBattery.ReportUpdated    += (_, _) => UpdateBattery();
+        }
+        catch { /* battery/network events unavailable on this hardware */ }
     }
 
     public void Refresh()
