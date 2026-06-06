@@ -9,7 +9,11 @@
     <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
     <WindowsPackageType>None</WindowsPackageType>
-    <EnableMsixTooling>false</EnableMsixTooling>
+    <!-- EnableMsixTooling=true is REQUIRED for unpackaged apps: its MSIX targets rename
+         the generated $(AssemblyName).pri to resources.pri. Without it, Windows App SDK 1.8
+         emits NestVault_Windows.pri, the WinUI runtime can't find resources.pri, and control
+         default styles (NavigationView etc.) fail to load -> XamlParseException 0x802B000A. -->
+    <EnableMsixTooling>true</EnableMsixTooling>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -36,4 +40,17 @@
   <ItemGroup>
     <PRIResource Include="Strings\**\Resources.resw" />
   </ItemGroup>
+
+  <!-- Fallback safety net: if the build ever leaves the PRI named after the assembly
+       (e.g. EnableMsixTooling rename not firing during `dotnet publish`), copy it to
+       resources.pri so the WinUI runtime can locate framework control styles.
+       Runs both after a plain build and after publish. -->
+  <Target Name="EnsureResourcesPri" AfterTargets="Build;Publish">
+    <Copy Condition="Exists('$(OutDir)$(AssemblyName).pri') And !Exists('$(OutDir)resources.pri')"
+          SourceFiles="$(OutDir)$(AssemblyName).pri"
+          DestinationFiles="$(OutDir)resources.pri" />
+    <Copy Condition="'$(PublishDir)' != '' And Exists('$(PublishDir)$(AssemblyName).pri') And !Exists('$(PublishDir)resources.pri')"
+          SourceFiles="$(PublishDir)$(AssemblyName).pri"
+          DestinationFiles="$(PublishDir)resources.pri" />
+  </Target>
 </Project>
